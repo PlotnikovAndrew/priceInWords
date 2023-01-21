@@ -3,7 +3,7 @@ package ru.otus.project;
 
 import java.util.ArrayList;
 
-public class NumbersToString {
+public class NumberToText {
 
     private static final String[][] NUMBERS_FROM_ONE_TO_NINE = {
             {"","один","два","три","четыре","пять","шесть","семь","восемь","девять"},
@@ -29,25 +29,33 @@ public class NumbersToString {
             {"триллион","триллиона","триллионов","0"}
     };
 
+
+    private String textNumber;
     private final ArrayList<Integer> dividedNumberInteger = new ArrayList<>();
     private final ArrayList<String> dividedNumberString = new ArrayList<>();
-    private final ArrayList<String> wordsString = new ArrayList<>();
-    private MoneyArray moneyArray = new MoneyArray(Currency.USD);
+    private final ArrayList<String> numberName = new ArrayList<>();
+    private final MoneyArray moneyArray;
 
-    NumbersToString(int moneyNumber, MoneyArray moneyArray){
-        this.dividedNumber(moneyNumber);
+    NumberToText(int moneyNumber, MoneyArray moneyArray){
         this.moneyArray = moneyArray;
+        this.splitNumber(moneyNumber);
+        this.makeDividedNumberString();
+        this.addWords();
+        this.mergeArray();
     }
 
-    public void dividedNumber (int moneyNumber){
+    public String getTextNumber() {
+        return textNumber;
+    }
+
+    private void splitNumber(int moneyNumber){
         while(moneyNumber > 0) {
             dividedNumberInteger.add(moneyNumber % 1000);
             moneyNumber /= 1000;
         }
-        System.out.println(dividedNumberInteger);
     }
 
-    public String transfiguration(int number, boolean isThousand){
+    private String transfiguration(int number, boolean isThousand){
 
         ArrayList<String> arrayListString = new ArrayList<>();
         StringBuilder string = new StringBuilder();
@@ -63,7 +71,7 @@ public class NumbersToString {
             arrayListString.add(MULTIPLES_OF_HUNDRED[numberHundred]);
         }
 
-        if (numberTen > 10 && numberTen < 20){
+        if (10 < numberTen && numberTen < 20){
             int numIndex = numberTen % 10;
             arrayListString.add(NUMBERS_FROM_TEN_TO_TWENTY[numIndex]);
         } else if (numberTen < 10) {
@@ -91,54 +99,50 @@ public class NumbersToString {
         return string.toString();
     }
 
-    public void makeDividedNumberString(){
+    private void makeDividedNumberString(){
 
         for (int i = 0; i < dividedNumberInteger.size(); i++) {
             int num = dividedNumberInteger.get(i);
+            String convertedToString;
             if (i == 1){
-                String str = this.transfiguration(num, true);
-                dividedNumberString.add(str);
+                convertedToString = this.transfiguration(num, true);
             } else {
-                String str = this.transfiguration(num, false);
-                dividedNumberString.add(str);
+                convertedToString = this.transfiguration(num, false);
             }
+            dividedNumberString.add(convertedToString);
         }
-        System.out.println(dividedNumberString);
     }
 
-    public void addWords(){
+    private void addWords(){
         int number = this.dividedNumberInteger.get(0);
         String currency = this.moneyArray.getMoneyString(number);
-        wordsString.add(currency);
+        numberName.add(currency);
         for (int i = 1; i < dividedNumberInteger.size(); i++){
             int word = dividedNumberInteger.get(i);
             word = Math.abs(word) % 100;
             int word1 = word % 10;
             if (word > 10 && word < 20){
-                wordsString.add(MULTIPLES_OF_THOUSAND[i-1][2]);
+                numberName.add(MULTIPLES_OF_THOUSAND[i-1][2]);
                 continue;
             }
             if (word1 > 1 && word1 < 5){
-                wordsString.add(MULTIPLES_OF_THOUSAND[i-1][1]);
+                numberName.add(MULTIPLES_OF_THOUSAND[i-1][1]);
                 continue;
             }
             if (word1 == 1) {
-                wordsString.add(MULTIPLES_OF_THOUSAND[i-1][0]);
+                numberName.add(MULTIPLES_OF_THOUSAND[i-1][0]);
                 continue;
             }
-            wordsString.add(MULTIPLES_OF_THOUSAND[i-1][2]);
+            numberName.add(MULTIPLES_OF_THOUSAND[i-1][2]);
         }
-        System.out.println(wordsString);
     }
 
-    public void concatArray(){
-        String str = "";
+    private void mergeArray(){
+        StringBuilder mergeString = new StringBuilder();
         for (int i = dividedNumberString.size()-1; i > -1; i--){
-            str += dividedNumberString.get(i)+ wordsString.get(i) + " ";
-            System.out.println(str);
+            mergeString.append(dividedNumberString.get(i)).append(numberName.get(i)).append(" ");
         }
-        System.out.println(str);
+        this.textNumber = mergeString.toString();
     }
-
 
 }
