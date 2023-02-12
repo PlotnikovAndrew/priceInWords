@@ -1,16 +1,25 @@
 package ru.otus.assertions;
 
 
+import java.util.ArrayList;
+
 public class Assertions {
 
-    public static void assertGetMoneyStringMethod(String returnedDeclinationString, String correctDeclinationString){
-        if(!(correctDeclinationString.equals(returnedDeclinationString))){
-            throw new  AssertionError(String.format("Expected %s, return %s", correctDeclinationString, returnedDeclinationString));
+    public static void assertGetMoneyStringMethod(String expectedDeclinationString, String correctDeclinationString){
+        if(!(correctDeclinationString.equals(expectedDeclinationString))){
+            throw new  AssertionError(String.format("Expected %s, return %s", correctDeclinationString, expectedDeclinationString));
         }
     }
-    public static void assertGetTextNumberMethod(String returnedTextNumber, String correctTextNumber){
-        if(!(correctTextNumber.equals(returnedTextNumber))){
-            throw new  AssertionError(String.format("Expected %s, return %s", correctTextNumber, returnedTextNumber));
+
+    public static void assertGetTextNumberMethod(String expectedTextNumber, String correctTextNumber){
+        if(!(correctTextNumber.equals(expectedTextNumber))){
+            throw new  AssertionError(String.format("Expected %s, return %s", correctTextNumber, expectedTextNumber));
+        }
+    }
+
+    public static void assertSplitNumberMethod(ArrayList<Integer> expectedArrayList, ArrayList<Integer> correctArrayList){
+        if(!expectedArrayList.equals(correctArrayList)){
+            throw new  AssertionError("Arrays are not equal");
         }
     }
 }

@@ -3,6 +3,8 @@ package ru.otus.project;
 
 import java.util.ArrayList;
 
+import static ru.otus.project.SplitterNumbers.*;
+
 public class NumberToText {
 
     private static final String[][] NUMBERS_FROM_ONE_TO_NINE = {
@@ -31,14 +33,14 @@ public class NumberToText {
 
 
     private String textNumber;
-    private final ArrayList<Integer> dividedNumberInteger = new ArrayList<>();
+    private final ArrayList<Integer> dividedNumberInteger;
     private final ArrayList<String> dividedNumberString = new ArrayList<>();
     private final ArrayList<String> numberName = new ArrayList<>();
     private final DeclinationMoney declinationMoney;
 
     public NumberToText(int moneyNumber, Currency currency){
         this.declinationMoney = new DeclinationMoney(currency);
-        this.splitNumber(moneyNumber);
+        this.dividedNumberInteger = splitNumber(moneyNumber);
         this.makeDividedNumberString();
         this.addWords();
         this.mergeArray();
@@ -46,13 +48,6 @@ public class NumberToText {
 
     public String getTextNumber() {
         return textNumber;
-    }
-
-    protected void splitNumber(int moneyNumber){
-        while(moneyNumber > 0) {
-            dividedNumberInteger.add(moneyNumber % 1000);
-            moneyNumber /= 1000;
-        }
     }
 
     private String transfiguration(int number, boolean isThousand){
@@ -99,7 +94,7 @@ public class NumberToText {
         return string.toString();
     }
 
-    protected void makeDividedNumberString(){
+    private void makeDividedNumberString(){
 
         for (int i = 0; i < dividedNumberInteger.size(); i++) {
             int num = dividedNumberInteger.get(i);
