@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import static ru.otus.assertions.Assertions.*;
 import static ru.otus.project.SplitterNumbers.*;
 
-public class SplitterNumbersTest {
+public class SplitterNumbersTests {
 
     public void correctSplitNumber(int number, ArrayList<Integer> correctArrayList) {
         String scenario = "Тест на корректное разбиение числа на тысяные доли";

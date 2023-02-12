@@ -3,6 +3,7 @@ package ru.otus.project;
 
 import java.util.ArrayList;
 
+import static ru.otus.project.MergeArray.*;
 import static ru.otus.project.SplitterNumbers.*;
 
 public class NumberToText {
@@ -32,7 +33,7 @@ public class NumberToText {
     };
 
 
-    private String textNumber;
+    private final String textNumber;
     private final ArrayList<Integer> dividedNumberInteger;
     private final ArrayList<String> dividedNumberString = new ArrayList<>();
     private final ArrayList<String> numberName = new ArrayList<>();
@@ -43,7 +44,7 @@ public class NumberToText {
         this.dividedNumberInteger = splitNumber(moneyNumber);
         this.makeDividedNumberString();
         this.addWords();
-        this.mergeArray();
+        this.textNumber = mergeArray(dividedNumberString, numberName);
     }
 
     public String getTextNumber() {
@@ -130,14 +131,6 @@ public class NumberToText {
             }
             numberName.add(MULTIPLES_OF_THOUSAND[i-1][2]);
         }
-    }
-
-    private void mergeArray(){
-        StringBuilder mergeString = new StringBuilder();
-        for (int i = dividedNumberString.size()-1; i > -1; i--){
-            mergeString.append(dividedNumberString.get(i)).append(numberName.get(i)).append(" ");
-        }
-        this.textNumber = mergeString.toString();
     }
 
 }

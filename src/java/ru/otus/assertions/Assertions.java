@@ -22,4 +22,10 @@ public class Assertions {
             throw new  AssertionError("Arrays are not equal");
         }
     }
+
+    public static void assertMergeArrayMethod(String expectedMergeArray, String correctMergeArray){
+        if(!(correctMergeArray.equals(expectedMergeArray))){
+            throw new  AssertionError(String.format("Expected %s, return %s", correctMergeArray, expectedMergeArray));
+        }
+    }
 }

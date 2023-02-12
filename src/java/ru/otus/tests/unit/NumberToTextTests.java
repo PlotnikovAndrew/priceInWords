@@ -5,7 +5,7 @@ import ru.otus.project.NumberToText;
 
 import static ru.otus.assertions.Assertions.assertGetMoneyStringMethod;
 
-public class NumberToTextTest {
+public class NumberToTextTests {
 
     public void correctNumberToText(int moneyNumber, Currency currency, String correctDeclinationString) {
         String scenario = "Тест на корректный перевод цифры в пропись";
