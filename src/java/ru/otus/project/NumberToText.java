@@ -34,10 +34,10 @@ public class NumberToText {
     private final ArrayList<Integer> dividedNumberInteger = new ArrayList<>();
     private final ArrayList<String> dividedNumberString = new ArrayList<>();
     private final ArrayList<String> numberName = new ArrayList<>();
-    private final MoneyArray moneyArray;
+    private final DeclinationMoney declinationMoney;
 
-    NumberToText(int moneyNumber, MoneyArray moneyArray){
-        this.moneyArray = moneyArray;
+    public NumberToText(int moneyNumber, Currency currency){
+        this.declinationMoney = new DeclinationMoney(currency);
         this.splitNumber(moneyNumber);
         this.makeDividedNumberString();
         this.addWords();
@@ -48,7 +48,7 @@ public class NumberToText {
         return textNumber;
     }
 
-    private void splitNumber(int moneyNumber){
+    protected void splitNumber(int moneyNumber){
         while(moneyNumber > 0) {
             dividedNumberInteger.add(moneyNumber % 1000);
             moneyNumber /= 1000;
@@ -99,7 +99,7 @@ public class NumberToText {
         return string.toString();
     }
 
-    private void makeDividedNumberString(){
+    protected void makeDividedNumberString(){
 
         for (int i = 0; i < dividedNumberInteger.size(); i++) {
             int num = dividedNumberInteger.get(i);
@@ -115,7 +115,7 @@ public class NumberToText {
 
     private void addWords(){
         int number = this.dividedNumberInteger.get(0);
-        String currency = this.moneyArray.getMoneyString(number);
+        String currency = this.declinationMoney.getDeclinationMoneyString(number);
         numberName.add(currency);
         for (int i = 1; i < dividedNumberInteger.size(); i++){
             int word = dividedNumberInteger.get(i);
