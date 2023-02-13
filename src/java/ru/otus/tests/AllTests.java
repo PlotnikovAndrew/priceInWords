@@ -16,26 +16,26 @@ public class AllTests {
         moneyArrayTests.correctDeclinationMoney(Currency.RUB, 1_000_000, "рублей");
 
         NumberToTextTests numberToTextTest = new NumberToTextTests();
-        numberToTextTest.correctNumberToText(103, Currency.RUB, "сто три рубля ");
+        numberToTextTest.correctNumberToText( 130103, Currency.RUB, "сто тридцать тысяч сто три рубля");
 
         SplitterNumbersTests splitterNumbersTest = new SplitterNumbersTests();
         ArrayList<Integer> correctArrayList = new ArrayList<>();
-        correctArrayList.add(542);
-        correctArrayList.add(132);
         correctArrayList.add(55);
+        correctArrayList.add(132);
+        correctArrayList.add(542);
 //        correctArrayList.add(21);
         splitterNumbersTest.correctSplitNumber(55132542, correctArrayList);
 
         MergeArrayTests mergeArrayTests = new MergeArrayTests();
         ArrayList<String> listFirst = new ArrayList<>();
-        listFirst.add("1 ");
-        listFirst.add("2 ");
-        listFirst.add("3 ");
+        listFirst.add("1");
+        listFirst.add("3");
+        listFirst.add("5");
         ArrayList<String> listSecond = new ArrayList<>();
-        listSecond.add("1");
         listSecond.add("2");
-        listSecond.add("3");
-        mergeArrayTests.correctMergeArray(listFirst, listSecond, "3 3 2 2 1 1 ");
+        listSecond.add("4");
+        listSecond.add("6");
+        mergeArrayTests.correctMergeArray(listFirst, listSecond, "1 2 3 4 5 6");
 
     }
 }

@@ -2,6 +2,7 @@ package ru.otus.project;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static ru.otus.project.MergeArray.*;
 import static ru.otus.project.SplitterNumbers.*;
@@ -34,6 +35,7 @@ public class NumberToText {
 
 
     private final String textNumber;
+    private String textCurrency;
     private final ArrayList<Integer> dividedNumberInteger;
     private final ArrayList<String> dividedNumberString = new ArrayList<>();
     private final ArrayList<String> numberName = new ArrayList<>();
@@ -43,18 +45,24 @@ public class NumberToText {
         this.declinationMoney = new DeclinationMoney(currency);
         this.dividedNumberInteger = splitNumber(moneyNumber);
         this.makeDividedNumberString();
+        this.receiveDeclinationCurrency();
         this.addWords();
         this.textNumber = mergeArray(dividedNumberString, numberName);
     }
 
     public String getTextNumber() {
-        return textNumber;
+        return textNumber + textCurrency;
+    }
+
+    private void receiveDeclinationCurrency(){
+        int number = this.dividedNumberInteger.get(dividedNumberInteger.size()-1);
+        this.textCurrency = this.declinationMoney.getDeclinationMoneyString(number);
     }
 
     private String transfiguration(int number, boolean isThousand){
 
         ArrayList<String> arrayListString = new ArrayList<>();
-        StringBuilder string = new StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder();
         int numberHundred = number / 100;
         int numberTen = number % 100;
         int numberOne = number % 10;
@@ -88,11 +96,15 @@ public class NumberToText {
             }
         }
 
-        for (String str: arrayListString){
-            string.append(str).append(" ");
+        for(int i = 0; i < arrayListString.size(); i++){
+            if(i != arrayListString.size()-1){
+                stringBuilder.append(arrayListString.get(i)).append(" ");
+            } else {
+                stringBuilder.append(arrayListString.get(i));
+            }
         }
 
-        return string.toString();
+        return stringBuilder.toString();
     }
 
     private void makeDividedNumberString(){
@@ -110,27 +122,25 @@ public class NumberToText {
     }
 
     private void addWords(){
-        int number = this.dividedNumberInteger.get(0);
-        String currency = this.declinationMoney.getDeclinationMoneyString(number);
-        numberName.add(currency);
-        for (int i = 1; i < dividedNumberInteger.size(); i++){
+        for (int i = 0; i < dividedNumberInteger.size()-1; i++){
             int word = dividedNumberInteger.get(i);
             word = Math.abs(word) % 100;
             int word1 = word % 10;
             if (word > 10 && word < 20){
-                numberName.add(MULTIPLES_OF_THOUSAND[i-1][2]);
+                numberName.add(MULTIPLES_OF_THOUSAND[i][2]);
                 continue;
             }
             if (word1 > 1 && word1 < 5){
-                numberName.add(MULTIPLES_OF_THOUSAND[i-1][1]);
+                numberName.add(MULTIPLES_OF_THOUSAND[i][1]);
                 continue;
             }
             if (word1 == 1) {
-                numberName.add(MULTIPLES_OF_THOUSAND[i-1][0]);
+                numberName.add(MULTIPLES_OF_THOUSAND[i][0]);
                 continue;
             }
-            numberName.add(MULTIPLES_OF_THOUSAND[i-1][2]);
+            numberName.add(MULTIPLES_OF_THOUSAND[i][2]);
         }
+        Collections.reverse(numberName);
     }
 
 }
