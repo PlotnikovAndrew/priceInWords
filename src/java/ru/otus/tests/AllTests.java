@@ -17,6 +17,8 @@ public class AllTests {
 
         NumberToTextTests numberToTextTest = new NumberToTextTests();
         numberToTextTest.correctNumberToText( 130103, Currency.RUB, "сто тридцать тысяч сто три рубля");
+        numberToTextTest.correctNumberToText( 531745356, Currency.RUB, "пятьсот тридцать один миллион семьсот сорок пять тысяч триста пятьдесят шесть рублей");
+        numberToTextTest.correctNumberToText( 1438427564, Currency.RUB, "один миллиард четыреста тридцать восемь миллионов четыреста двадцать семь тысяч пятьсот шестьдесят четыре рубля");
 
         SplitterNumbersTests splitterNumbersTest = new SplitterNumbersTests();
         ArrayList<Integer> correctArrayList = new ArrayList<>();
@@ -35,7 +37,11 @@ public class AllTests {
         listSecond.add("2");
         listSecond.add("4");
         listSecond.add("6");
+        ArrayList<String> listThird = new ArrayList<>();
+        listThird.add("1");
+        listThird.add("3");
         mergeArrayTests.correctMergeArray(listFirst, listSecond, "1 2 3 4 5 6");
+        mergeArrayTests.correctMergeArray(listFirst, listThird, "1 1 3 3 5");
 
     }
 }

@@ -51,7 +51,7 @@ public class NumberToText {
     }
 
     public String getTextNumber() {
-        return textNumber + textCurrency;
+        return textNumber + " " + textCurrency;
     }
 
     private void receiveDeclinationCurrency(){
@@ -122,25 +122,28 @@ public class NumberToText {
     }
 
     private void addWords(){
-        for (int i = 0; i < dividedNumberInteger.size()-1; i++){
-            int word = dividedNumberInteger.get(i);
+        ArrayList<Integer> reverseDividedNumberInteger;
+        reverseDividedNumberInteger = (ArrayList<Integer>) dividedNumberInteger.clone();
+        Collections.reverse(reverseDividedNumberInteger);
+
+        for (int i = 1 ; i < reverseDividedNumberInteger.size(); i++){
+            int word = reverseDividedNumberInteger.get(i);
             word = Math.abs(word) % 100;
             int word1 = word % 10;
             if (word > 10 && word < 20){
-                numberName.add(MULTIPLES_OF_THOUSAND[i][2]);
+                numberName.add(MULTIPLES_OF_THOUSAND[i-1][2]);
                 continue;
             }
             if (word1 > 1 && word1 < 5){
-                numberName.add(MULTIPLES_OF_THOUSAND[i][1]);
+                numberName.add(MULTIPLES_OF_THOUSAND[i-1][1]);
                 continue;
             }
             if (word1 == 1) {
-                numberName.add(MULTIPLES_OF_THOUSAND[i][0]);
+                numberName.add(MULTIPLES_OF_THOUSAND[i-1][0]);
                 continue;
             }
-            numberName.add(MULTIPLES_OF_THOUSAND[i][2]);
+            numberName.add(MULTIPLES_OF_THOUSAND[i-1][2]);
         }
         Collections.reverse(numberName);
     }
-
 }
